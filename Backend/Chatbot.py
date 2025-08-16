@@ -101,5 +101,5 @@ def ChatBot(Query):
 
 if __name__=="__main__":
     while True:
-        user_input=input("enter your question")
+        user_input=input("Enter your question")
         print(ChatBot(user_input))

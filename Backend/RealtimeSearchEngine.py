@@ -110,7 +110,7 @@ def RealtimeSearchEngine(prompt):
 
 if __name__=="__main__":
     while True:
-        prompt=input("enter your query: ")
+        prompt=input("Enter your query: ")
         print(RealtimeSearchEngine(prompt))
 
 
