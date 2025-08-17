@@ -14,7 +14,7 @@ async def TextToAudioFile(text)-> None:
     if os.path.exists(file_path):
         os.remove(file_path)
 
-    communicate=edge_tts.Communicate(text,AssistantVoice,pitch='+5Hz',rate='+13%')
+    communicate=edge_tts.Communicate(text,AssistantVoice,pitch='-10Hz',rate='-15%')
 
     await communicate.save(r"Data\speech.mp3")
 

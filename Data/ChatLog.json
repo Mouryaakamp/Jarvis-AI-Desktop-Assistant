@@ -86,5 +86,29 @@
     {
         "role": "assistant",
         "content": "I see you're referencing the search results we had earlier! \"Yeee\" seems to be a song title or a keyword associated with various artists and YouTube videos."
+    },
+    {
+        "role": "user",
+        "content": "hello."
+    },
+    {
+        "role": "assistant",
+        "content": "Hello!"
+    },
+    {
+        "role": "user",
+        "content": "hello."
+    },
+    {
+        "role": "assistant",
+        "content": "Hello again!"
+    },
+    {
+        "role": "user",
+        "content": "hello."
+    },
+    {
+        "role": "assistant",
+        "content": "Hello once more!"
     }
 ]
