@@ -6,6 +6,7 @@ from dotenv import dotenv_values
 from bs4 import BeautifulSoup
 from rich import print
 from groq import Groq
+from asyncio import run
 
 import webbrowser
 import subprocess
@@ -175,60 +176,45 @@ def System(command):
 
 
 
-async def TranslateAndExecute(commands:list[str]):
-
-    funcs=[]
+async def TranslateAndExecute(commands: list[str]):
+    funcs = []
 
     for command in commands:
         if command.startswith("open "):
+            fun = asyncio.to_thread(OpenApp, command.removeprefix("open "))
+            funcs.append(fun)
 
-            if "open it"in command:
-                pass
-            if "open file"==command:
-                pass
-
-            else:
-                fun =asyncio.to_thread(OpenApp,command.removeprefix("open "))
-                funcs.append(fun)
-        elif command.startswith("genral "):
-            pass
-        elif command.startswith("realtime "):
-            pass
         elif command.startswith("close "):
-            fun =asyncio.to_thread(OpenApp,command.removeprefix("close "))
+            fun = asyncio.to_thread(CloseApp, command.removeprefix("close "))
             funcs.append(fun)
 
         elif command.startswith("play "):
-            fun =asyncio.to_thread(OpenApp,command.removeprefix("play "))
+            fun = asyncio.to_thread(PlayYoutube, command.removeprefix("play "))
             funcs.append(fun)
 
         elif command.startswith("content "):
-            fun =asyncio.to_thread(OpenApp,command.removeprefix("content "))
+            fun = asyncio.to_thread(content, command.removeprefix("content "))
             funcs.append(fun)
 
         elif command.startswith("google search "):
-            fun =asyncio.to_thread(OpenApp,command.removeprefix("google search "))
+            fun = asyncio.to_thread(GoogleSearch, command.removeprefix("google search "))
             funcs.append(fun)
 
         elif command.startswith("youtube search "):
-            fun =asyncio.to_thread(OpenApp,command.removeprefix("youtube search "))
+            fun = asyncio.to_thread(YouTubeSearch, command.removeprefix("youtube search "))
             funcs.append(fun)
 
         elif command.startswith("system "):
-            fun =asyncio.to_thread(OpenApp,command.removeprefix("system "))
+            fun = asyncio.to_thread(System, command.removeprefix("system "))
             funcs.append(fun)
 
         else:
             print(f"No Function Found For {command}")
 
-        results=await asyncio.gather(*funcs)
+    results = await asyncio.gather(*funcs)
 
-        for result in results:
-            if isinstance(result,str):
-                yield result
-
-            else:
-                yield result
+    for result in results:
+        yield result
 
 async def Automation(commands:list[str]):
     async for result in TranslateAndExecute(commands):

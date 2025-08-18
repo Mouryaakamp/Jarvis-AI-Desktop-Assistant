@@ -5,11 +5,11 @@ ShowTextToScreen,
 SetMicrophoneStatus,
 TempDirectoryPath, AnswerModifier, QueryModifier, GetMicrophoneStatus, GetAssistanceStatus )
 from Backend.Model import FirstLayerDMM
-from Backend. RealtimeSearchEngine import RealtimeSearchEngine
-from Backend. Automation import Automation
-from Backend. SpeechToText import SpeechRecognition
-from Backend. Chatbot import ChatBot
-from Backend. TextToSpeech import TextToSpeech
+from Backend.RealtimeSearchEngine import RealtimeSearchEngine
+from Backend.Automation import Automation
+from Backend.SpeechToText import SpeechRecognition
+from Backend.Chatbot import ChatBot
+from Backend.TextToSpeech import TextToSpeech
 from dotenv import dotenv_values
 from asyncio import run
 from time import sleep
@@ -37,7 +37,7 @@ def ShowDefaultChatifNoChats():
             file.write(DefaultMessage)
 
 def ReadChatLogJson():
-    with open(r'Data\Chatlog.data','r',encoding='utf-8') as file:
+    with open(r'Data\ChatLog.json','r',encoding='utf-8') as file:
         content = file.read().strip()
         if not content:   # if file is empty
             return []     # return empty chat log
@@ -104,31 +104,32 @@ def MainExecution():
      )
 
      for queries in Decision:
-          if "genrate "in queries:
+          if "generate " in queries:
                ImageGenrationQuery=str(queries)
                ImageExecution=True
+               break  
 
      for queries in Decision:
           if TaskExecution==False:
                if any(queries.startswith(func) for func in Functions):
                     run(Automation(list(Decision)))
                     TaskExecution=True
+
      
      if ImageExecution== True:
           
-        with open(r"Frontend\Files\ImageGenration.data",'w')as file:
-            file.write(f"{ImageGenrationQuery},True")
+          with open(r"Frontend\Files\ImageGenration.data",'w')as file:
+               file.write(f"{ImageGenrationQuery},True")
 
 
-        try:
-             p1=subprocess.Popen(['python',r'Backend\ImageGenration.py'],
-                                 stdout=subprocess.PIPE,stderr=subprocess.PIPE,
-
-                                 stdin=subprocess.PIPE, shell=False)
-             
-             subprocess.append(p1)
-        except Exception as e:
-             print(f"Error starting ImageGenration.py:{e}")
+          try:
+               p1=subprocess.Popen(['python',r'Backend\ImageGenration.py'],
+                                   stdout=subprocess.PIPE,stderr=subprocess.PIPE,
+                                   stdin=subprocess.PIPE, shell=False)
+               
+               subprocesses.append(p1)
+          except Exception as e:
+               print(f"Error starting ImageGenration.py:{e}")
 
 
      if G and R or R:
